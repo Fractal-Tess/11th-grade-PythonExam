@@ -1,0 +1,78 @@
+:root {
+    --main-bg-color: #222831;
+    --secondary-bg-color: #393e46;
+    --main-text-color: #eeeeee;
+    --acent-color: #225355;
+    font: 16px;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    background: var(--main-bg-color);
+}
+
+html {}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/*the container must be positioned relative:*/
+.autocomplete {
+    position: absolute;
+    left: 50%;
+    top: 7.5%;
+    display: inline-block;
+    width: 40rem;
+    transform: translate(-50%, 0);
+
+}
+
+input {
+    border: none;
+    width: 100%;
+    text-align: left;
+    border: 2px solid transparent;
+    padding: 1.2rem;
+    font-size: 2rem;
+    outline: none;
+}
+
+input[type=text] {
+    color: var(--main-text-color);
+    background-color: var(--secondary-bg-color);
+}
+
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid var(--main-text-color);
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    right: 0;
+    left: 0;
+
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: var(--secondary-bg-color);
+    border-bottom: 1px solid var(--main-text-color);
+    color: var(--main-text-color);
+}
+
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: var(--acent-color);
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
