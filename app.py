@@ -1,8 +1,14 @@
+from TrainManager import TrainManager
 from flask import Flask, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 import os
-import ticket_module
+from TrainManager import TrainManager as TM 
+import logging
+
+
+log = logging.getLogger('eventlet')
+log.disabled = True
 
 # CONSTANTS
 app = Flask(__name__)
@@ -12,7 +18,7 @@ PORT = 80
 
 # GlOBALS
 socketio = SocketIO(app, cors_allowed_origins="*")
-tc = ticket_module.TClient()
+tm = TM()
 db = SQLAlchemy(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///market.db '
 
@@ -21,28 +27,49 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///market.db '
 #     name = db.Column(db.String(length=30), nullable=False)
 
 #     def __repr__(self):
-#         return f"Item {self.name}"
+#         return f"Item {self.name}
+
+
+def ack():
+    print("Message recieved")
+
 
 @app.route('/')
 def index_page():
     return render_template('index.html')
 
-def ack():
-    print("Message was recived!")
-    
-@socketio.on("message")
-def handle_message(msg):
-    print(msg)
+
+# @socketio.on("connect")
+# def connected():
+#     print("\n\n\tA user has connected\n\n")
 
 
-@socketio.on('get_all_routes')
-def my_event():
-    print("Routes were requested")
-    socketio.emit("all_routes", tc.route_beginings())
+# @socketio.on("disconnect")
+# def disconnected():
+#     print("\n\n\t A user has disconnected\n\n")
+
+
+# gus => get_unique_stations
+# s_gus => server response to get_unique_stations
+@socketio.on('gus')
+def gus():
+    print(tm.get_unique_stations())
+    socketio.emit("s_gus", tm.get_unique_stations(), callback=ack)
+
+# grws = get routes with starting station
+@socketio.on('grwst')
+def grwus(data):
+    socketio.emit("s_grwst", tm.get_routes_with_station(data), callback=ack)
+
+# get routes with starting and ending station
+@socketio.on('grwsnes')
+def grwus(starting_station, end_station):
+    socketio.emit("s_grwsnes", tm.get_route__with_stations(starting_station, end_station), callback=ack)
+
 
 if __name__ == '__main__':
     if not os.path.exists("market.db"):
         print("Did not find a databse: Creating a new one....")
         db.create_all()
-    socketio.run(app, port=PORT, debug=True, host=HOST)
+    socketio.run(app, port=PORT, debug=True, host=HOST, log=None)
     

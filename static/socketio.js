@@ -1,15 +1,67 @@
 var socket = io();
+// stif = starting_station_input_field
+var stif = document.getElementById("sStation");
+//  ending station input field
+var esif = document.getElementById("eStation");
+
+var origin = document.getElementById("origin");
+var destenation = document.getElementById("destenation");
+
+//ALL CUMMINICATED ELEMENTS ARE UPPER CASE
 
 socket.on("connect", () => {
-  socket.emit("message", "Websocket connection!");
-  socket.emit("get_all_routes");
+  //Cennection has escalted to the websocket protocol!
+  socket.emit("msg", "Websocket connection!");
+  console.log("Connected through websockets");
+  //Instantly request all unique stations.
+  stage1();
 });
 
-socket.on("all_routes", (data) => {
-  autocomplete(document.getElementById("sStation"), data);
+function stage1() {
+  socket.emit("gus");
+  //After requesting, the server should respond with a data array of strings('stations'),
+  //Also we recieve a callback which we call instantly to indicate we recieved the data.
+  socket.on("s_gus", (station_array, ack) => {
+    ack();
+    //Enable the field for statring station to be autcomplete
+    autocomplete(stif, station_array, stage2, origin);
+  });
+}
+
+function stage2() {
+  socket.emit("grwst", stif.value.toUpperCase());
+}
+socket.on("s_grwst", (station_array, ack) => {
+  ack();
+  autocomplete(esif, station_array, stage3, destenation);
 });
 
-function autocomplete(inp, arr) {
+function stage3() {
+  console.log("CALL");
+  socket.emit("grwsnes", stif.value.toUpperCase(), esif.value.toUpperCase());
+}
+socket.on("s_grwsnes", (data, ack) => {
+  ack();
+  if (data.length > 1) {
+    console.log("more than 1");
+  } else {
+  }
+});
+
+// socket.on("s_grwus", (station_array, ack) => {
+//   ack();
+//   console.log(station_array);
+//   autocomplete(document.getElementById("eStation"), station_array, subbmitBtn);
+// });
+
+function subbmitBtn() {
+  console.log("subbmit");
+}
+
+//grws = get routes with starting station
+function destenation_field() {}
+
+function autocomplete(inp, arr, callback, display) {
   /*The autocomplete function takes two parameters:
   The text field element and an array of possible autocompleted values:*/
   var currentFocus;
@@ -17,7 +69,6 @@ function autocomplete(inp, arr) {
   /*execute a function when it's  writen in the text field:*/
   inp.addEventListener("input", function () {
     var val = this.value;
-    console.log(val);
 
     /*close any already open lists of autocompleted values*/
     closeAllLists();
@@ -50,7 +101,8 @@ function autocomplete(inp, arr) {
           inp.value = this.getElementsByTagName("input")[0].value;
           /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
-          closeAllLists();
+          display.innerHTML = inp.value;
+          callback();
         });
         a.appendChild(b);
       }
@@ -58,51 +110,45 @@ function autocomplete(inp, arr) {
       // }
     }
   });
-  /*execute a function presses a key on the keyboard:*/
+  //Execute this if we press any keys
   inp.addEventListener("keydown", function (e) {
     var x = document.getElementById("autocomplete-list");
     if (x) x = x.getElementsByTagName("div");
     if (e.keyCode == 40) {
-      /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
+      //If the arrow DOWN key is pressed, increase the currentFocus variable
       currentFocus++;
-      /*and and make the current item more visible:*/
+      //Make it visable by making it active
       addActive(x);
     } else if (e.keyCode == 38) {
-      //up
-      /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
+      //Same thing as before but we go up
       currentFocus--;
-      /*and and make the current item more visible:*/
       addActive(x);
     } else if (e.keyCode == 13) {
-      /*If the ENTER key is pressed, prevent the form from being submitted,*/
+      //Prevent submission
       e.preventDefault();
       if (currentFocus > -1) {
-        /*and simulate a click on the "active" item:*/
+        //Simulate a click on the item
         if (x) x[currentFocus].click();
       }
     }
   });
   function addActive(x) {
-    /*a function to classify an item as "active":*/
     if (!x) return false;
-    /*start by removing the "active" class on all items:*/
+    //Remove the active class on all items
     removeActive(x);
     if (currentFocus >= x.length) currentFocus = 0;
     if (currentFocus < 0) currentFocus = x.length - 1;
-    /*add class "autocomplete-active":*/
+    //Add class autocomplete-active
     x[currentFocus].classList.add("autocomplete-active");
   }
   function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
+    //Remove the active class from the autocompelte list
     for (var i = 0; i < x.length; i++) {
       x[i].classList.remove("autocomplete-active");
     }
   }
   function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
+    //Close all suggestions except the one pressed on
     var x = document.getElementsByClassName("autocomplete-items");
     for (var i = 0; i < x.length; i++) {
       if (elmnt != x[i] && elmnt != inp) {
@@ -110,7 +156,7 @@ function autocomplete(inp, arr) {
       }
     }
   }
-  /*execute a function when someone clicks in the document:*/
+  //If clicked on the document, we close all active autocomplete suggestions
   document.addEventListener("click", (e) => {
     closeAllLists(e.target);
   });
