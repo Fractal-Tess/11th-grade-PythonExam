@@ -15,28 +15,26 @@
 
 <body>
     <form autocomplete="off">
-        <div class="d1">
-            <div class="autocomplete">
+        <div class="wraper">
+            <p class="from_p1">From</p>
+            <div class="autocomplete1">
                 <input id="sStation" type="text" name="s_station" placeholder="Starting station">
             </div>
-
-            <iframe src="https://www.cruisemapper.com/images/ports/2110-3635ff6aef0.jpg" scrolling="no"
-                frameborder="0"></iframe>
-            <p class="time" id="origin">Hello there</p>
-
-        </div>
-        <div class="d2">
-            <div class="autocomplete">
-                <input id="eStation" type="text" name="e_station" placeholder="End station">
+            <p class="to1">To</p>
+            <div class="autocomplete2">
+                <input id="eStation" type="text" name="s_station" placeholder="Starting station">
             </div>
-            <iframe src="https://www.cruisemapper.com/images/ports/2110-3635ff6aef0.jpg" scrolling="no"
-                frameborder="0"></iframe>
-            <p class="time" id="destenation">Hello there</p>
+            <p class="from_p2" id="from">From:</p>
+            <p class="to2" id="to2">To:</p>
+            <p class="route" id="route">Train Route =></p>
+            <p class="timings" id="timings">Timings:</p>
+            <input id="date_input" type="date" data-role="calendarpicker" name="date" data-dialog-mode="true"
+                class="calendar">
+            <button class="btn_buy" id="btn_book" type="button">Book ticket</button>
+
+
 
         </div>
-
-
-
     </form>
 </body>
 

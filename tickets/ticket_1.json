@@ -1,0 +1,11 @@
+{
+    "route_id": 1,
+    "routeOrigin": "РУСЕ РАЗПРЕДЕЛИТЕЛНА",
+    "routeDestenation": "ГОРНА ОРЯХОВИЦА",
+    "startingStation": "Русе",
+    "endingStaton": "Долапите",
+    "arivesAtStartingStation": "11:23",
+    "arrivesAtEndStation": "11:37",
+    "when": "2021-03-16",
+    "uid": "745bbd5d-8514-11eb-806f-001a7dda7113"
+}

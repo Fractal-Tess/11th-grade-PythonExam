@@ -4,11 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 import os
 from TrainManager import TrainManager as TM 
-import logging
+from json import dumps
+import uuid
 
 
-log = logging.getLogger('eventlet')
-log.disabled = True
 
 # CONSTANTS
 app = Flask(__name__)
@@ -59,13 +58,21 @@ def gus():
 # grws = get routes with starting station
 @socketio.on('grwst')
 def grwus(data):
-    socketio.emit("s_grwst", tm.get_routes_with_station(data), callback=ack)
+    socketio.emit("s_grwst", tm.get_following_stations(data), callback=ack)
 
 # get routes with starting and ending station
 @socketio.on('grwsnes')
 def grwus(starting_station, end_station):
     socketio.emit("s_grwsnes", tm.get_route__with_stations(starting_station, end_station), callback=ack)
 
+@socketio.on("book_ticket")
+def book_ticket(ticketDict):
+    ticket_count = len(os.listdir('tickets/'))
+    ticketDict["uid"] = str(uuid.uuid1())
+    with open(f"tickets/ticket_{ticket_count}.json", "w", encoding="utf-8") as f:
+        f.write(dumps(ticketDict, ensure_ascii=False))
+        f.close()
+    socketio.emit("s_book_ticket_response", {"uid":ticketDict["uid"]})
 
 if __name__ == '__main__':
     if not os.path.exists("market.db"):

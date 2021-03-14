@@ -27,7 +27,7 @@ class TrainManager(object):
                     unique_stations.append(station)
         return unique_stations
 
-    def get_routes_with_station(self, start_st: str):
+    def get_following_stations(self, start_st: str):
         """Return list of stations that have a connection with the starting staton"""
         connected_stations = []
         for route in self.all_routes:
@@ -47,12 +47,14 @@ class TrainManager(object):
             if start_station in station_array and end_station in station_array:
                 if station_array.index(start_station) < station_array.index(end_station):
                     route = {
+                        "route_id":route["_route_id"],
                         "route_origin":station_array[0],
                         "route_destination":station_array[-1],
                         "arrives_at_starting":route["_arrives"][station_array.index(start_station)],
                         "arrives_at_ending":route["_arrives"][station_array.index(end_station)]
                     }
                     filtered_routes.append(route)
+        print(filtered_routes[0]["route_id"])
         return filtered_routes 
         
             

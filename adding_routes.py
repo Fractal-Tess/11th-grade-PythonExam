@@ -65,14 +65,15 @@ while (raw_route_info := input("\n>>>").strip()) != "end":
     # print(str(date.time())[:-3])                    
 
     # odd, even = [num1, num2 for num1, num2 in zip(lst[1::2], lst[::2])]
+    file_count = len(os.listdir("routes/"))
     
     d_route = {
+        "_route_id": file_count,
         "_stations": stations,
         "_arrives": arrives,
         "_depars": departs
     }
 
-    file_count = len(os.listdir("routes/"))
     with open(f"routes/route_{file_count}.json", "w+", encoding='utf-8') as f:
         data = json.dumps(d_route, ensure_ascii=False)
         f.write(data)
