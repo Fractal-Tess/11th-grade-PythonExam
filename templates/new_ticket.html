@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+
+{% block content %}
+<form autocomplete="off">
+
+    <!-- Auto complete fields -->
+    <div class="autocomplete auto1">
+        <input id="sStation" type="text" placeholder="Starting station">
+    </div>
+    <div class="autocomplete auto2">
+        <input id="eStation" type="text" placeholder="End station">
+    </div>
+
+    <!-- Labels -->
+    <h3 type="text" class="label l1">From</h3>
+    <h3 type="text" class="label l2">To</h3>
+
+
+    <!-- Ticket information -->
+    <h3 type="text" class="info ti1">Route:</h3>
+    <h3 type="text" class="info ti2">From:</h3>
+    <h3 type="text" class="info ti3">To:</h3>
+    <h3 type="text" class="info ti4">Price:</h3>
+
+    <!-- When -->
+    <input id="date" type="date" data-role="calendarpicker" class="calendar">
+
+
+    </div>
+</form>
+{% endblock %}

@@ -1,41 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="https://cdn.socket.io/3.1.1/socket.io.min.js"></script>
-    <script defer src="{{ url_for('static', filename='socketio.js')}}"></script>
-    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
-    <title>New ticket</title>
-</head>
-
-<body>
-    <form autocomplete="off">
-        <div class="wraper">
-            <p class="from_p1">From</p>
-            <div class="autocomplete1">
-                <input id="sStation" type="text" name="s_station" placeholder="Starting station">
-            </div>
-            <p class="to1">To</p>
-            <div class="autocomplete2">
-                <input id="eStation" type="text" name="s_station" placeholder="Starting station">
-            </div>
-            <p class="from_p2" id="from">From:</p>
-            <p class="to2" id="to2">To:</p>
-            <p class="route" id="route">Train Route =></p>
-            <p class="timings" id="timings">Timings:</p>
-            <input id="date_input" type="date" data-role="calendarpicker" name="date" data-dialog-mode="true"
-                class="calendar">
-            <button class="btn_buy" id="btn_book" type="button">Book ticket</button>
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock %}
 
 
-
-        </div>
-    </form>
-</body>
-
-</html>
+{% block content %}
+<h6 type="text" style="font-size: 40px; text-align: center;">This is index</h6>
+{% endblock %}

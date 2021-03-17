@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <!-- Just a text for now -->
+            <a href="/">Viz</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/new-ticket">New ticket</a></li>
+            <li><a href="/check-ticket">Check for ticket</a></li>
+            <li><a href="/day-stats">Day Statistics</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/how-it-is-made">How it was made</a></li>
+        </ul>
+    </nav>
+    {% block content %} {% endblock %}
+</body>
+
+</html>
