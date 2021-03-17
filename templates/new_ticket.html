@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}{{title}}{% endblock %}
-
+{% block head %}<script defer src="{{url_for('static', filename='datepicker.js')}}"></script>
+{% endblock %}
 
 {% block content %}
-<form autocomplete="off">
+<form autocomplete="off" class="form">
 
     <!-- Auto complete fields -->
     <div class="autocomplete auto1">
@@ -17,17 +18,42 @@
     <!-- Labels -->
     <h3 type="text" class="label l1">From</h3>
     <h3 type="text" class="label l2">To</h3>
+    <h3 type="text" class="label l3">When</h3>
 
 
     <!-- Ticket information -->
-    <h3 type="text" class="info ti1">Route:</h3>
-    <h3 type="text" class="info ti2">From:</h3>
-    <h3 type="text" class="info ti3">To:</h3>
-    <h3 type="text" class="info ti4">Price:</h3>
-
+    <h3 type="text" class="info ti1">Route:Lorem ipsum dolor sit.</h3>
+    <h3 type="text" class="info ti2">From:Lorem ipsum dolor sit.</h3>
+    <h3 type="text" class="info ti3">To:Lorem ipsum dolor sit.</h3>
+    <h3 type="text" class="info ti4">When You board:Station, time & date</h3>
+    <h3 type="text" class="info ti5">When You get off:Station, time & date</h3>
     <!-- When -->
-    <input id="date" type="date" data-role="calendarpicker" class="calendar">
+    <div class="date-picker">
+        <div class="selected-date"></div>
+        <div class="dates">
+            <div class="month">
+                <div class="arrows prev-mth">&lt;</div>
+                <div class="mth"></div>
+                <div class="arrows next-mth">&gt;</div>
+            </div>
 
+            <div class="days"></div>
+        </div>
+    </div>
+    <!-- End when -->
+    <!-- passengers -->
+    <div class="adults">
+        <label type="text">Adults: </label>
+        <input type="number" min="0" max="9" step="1" value="1">
+    </div>
+    <div class="kids">
+        <label type="text">Kids: </label>
+        <input type="number" min="0" max="9" step="1" value="0">
+    </div>
+    <!-- end passengers -->
+    <!-- Buy button -->
+    <button class="btn_bt">Buy ticket</button>
+    <!-- End buy button -->
 
     </div>
 </form>

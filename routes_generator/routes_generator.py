@@ -106,7 +106,7 @@ while (raw_route_info := input("\n>>>").strip()) != "end":
         station_query = Unique_stations.query.filter_by(station_name=station).all()
         # If 'all()' returns a list we have a huge problem.
         if len(station_query) > 1:
-            print("Error on line 93, type is list (KMS)")
+            print("Error on line 93, query type returned list (KMS)")
             system("pause")
             exit(0)
         route_node = Route_nodes(route=db_route, station=station_query[0], node_in_route=index,

@@ -13,6 +13,11 @@
   color: #eeeeee;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 html,
 body {
   font-family: 'Poppins', sans-serif;
@@ -75,11 +80,6 @@ form {
       grid-template-rows: repeat(10, 1fr);
   height: 100%;
   height: 92vh;
-  border: 3px solid red;
-}
-
-form .autocomplete {
-  border: 3px solid green;
 }
 
 form .autocomplete input {
@@ -142,6 +142,15 @@ form .l2 {
   grid-column: 5/7;
 }
 
+form .l3 {
+  -ms-grid-row: 5;
+  -ms-grid-row-span: 1;
+  grid-row: 5/6;
+  -ms-grid-column: 5;
+  -ms-grid-column-span: 2;
+  grid-column: 5/7;
+}
+
 form .info {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -149,13 +158,11 @@ form .info {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
-  font-weight: 500;
+  font-weight: 300;
+  padding-left: 2rem;
 }
 
 form .ti1 {
@@ -180,6 +187,18 @@ form .ti4 {
   -ms-grid-row: 9;
   -ms-grid-row-span: 1;
   grid-row: 9/10;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+}
+
+form .ti5 {
+  -ms-grid-row: 10;
+  -ms-grid-row-span: 1;
+  grid-row: 10/11;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
 }
 
 form #date {
@@ -189,5 +208,196 @@ form #date {
   -ms-grid-row: 6;
   -ms-grid-row-span: 1;
   grid-row: 6/7;
+}
+
+form .date-picker {
+  -ms-grid-column: 5;
+  -ms-grid-column-span: 2;
+  grid-column: 5/7;
+  -ms-grid-row: 6;
+  -ms-grid-row-span: 1;
+  grid-row: 6/7;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 320px;
+  min-width: 14rem;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  background-color: #37414f;
+  -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-transition: background-color .5s ease;
+  transition: background-color .5s ease;
+}
+
+form .date-picker .selected-date {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #eeeeee;
+  font-size: 28px;
+}
+
+form .date-picker .dates {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #FFF;
+}
+
+form .date-picker .dates .active {
+  display: block;
+}
+
+form .date-picker .dates .days {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+  height: 200px;
+}
+
+form .date-picker .dates .days .day {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #313131;
+}
+
+form .date-picker .dates .days .date-picker .dates .days .day.selected {
+  background-color: #00CA85;
+}
+
+form .date-picker .dates .month {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 2px solid #EEE;
+}
+
+form .date-picker .dates .month .arrows {
+  width: 35px;
+  height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #313131;
+  font-size: 20px;
+}
+
+form .date-picker .dates .month .arrows:hover {
+  background-color: #F3F3F3;
+}
+
+form .date-picker .dates .month .arrows:active {
+  background-color: #00CA85;
+}
+
+form .date-picker:hover {
+  background-color: #00adb5;
+}
+
+form .adults,
+form .kids {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-grid-row: 7;
+  -ms-grid-row-span: 1;
+  grid-row: 7/8;
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 2;
+  grid-column: 4/6;
+}
+
+form .adults label,
+form .kids label {
+  padding-right: 2rem;
+  font-size: 1.2rem;
+}
+
+form .adults input,
+form .kids input {
+  text-align: center;
+  width: 30%;
+  height: 30%;
+  border-radius: 14px;
+  outline: none;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  border: 2px solid transparent;
+  color: #eeeeee;
+  background-color: #222831;
+}
+
+form .kids {
+  -ms-grid-column: 6;
+  -ms-grid-column-span: 2;
+  grid-column: 6/8;
+}
+
+form .btn_bt {
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 4;
+  grid-column: 4/8;
+  -ms-grid-row: 9;
+  -ms-grid-row-span: 1;
+  grid-row: 9/10;
+  height: 100%;
+  width: 100%;
+  background-color: #222831;
+  border: none;
+  color: #eeeeee;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  border: none;
+  -webkit-transition: background-color .5s ease;
+  transition: background-color .5s ease;
+}
+
+form .btn_bt:hover {
+  background-color: #00adb5;
 }
 /*# sourceMappingURL=main.css.map */
