@@ -57,7 +57,6 @@ prev_mth_element.addEventListener("click", goToPrevMonth);
 function toggleDatePicker(e) {
   if (!checkEventPathForClass(e.path, "dates")) {
     dates_element.classList.toggle("active");
-    console.log("Here");
   }
 }
 

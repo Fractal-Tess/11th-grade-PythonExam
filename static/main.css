@@ -71,6 +71,11 @@ nav {
   font-size: 1rem;
 }
 
+input[type=text] {
+  background-color: #eeeeee;
+  width: 100%;
+}
+
 form {
   display: -ms-grid;
   display: grid;
@@ -82,16 +87,51 @@ form {
   height: 92vh;
 }
 
+form .autocomplete {
+  position: relative;
+  display: inline-block;
+  /*when hovering an item:*/
+}
+
 form .autocomplete input {
   width: 100%;
   height: 100%;
-  border-radius: 14px;
+  border-radius: 1rem;
   outline: none;
   padding-left: 1rem;
   font-size: 1.5rem;
   border: 2px solid transparent;
   color: #eeeeee;
   background-color: #222831;
+}
+
+form .autocomplete .autocomplete-items {
+  position: absolute;
+  border: 2px solid #eeeeee;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  font-size: 1.2rem;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+form .autocomplete .autocomplete-active {
+  background-color: #00adb5 !important;
+  color: #222831;
+}
+
+form .autocomplete .autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #cccccc;
+  border-bottom: 2px solid #cccccc;
+}
+
+form .autocomplete .autocomplete-items div:hover {
+  background-color: #00959c;
 }
 
 form .auto1 {
@@ -259,11 +299,45 @@ form .date-picker .dates {
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #FFF;
+  color: #222831;
+  background-color: #eeeeee;
 }
 
-form .date-picker .dates .active {
-  display: block;
+form .date-picker .dates .month {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 2px solid #cccccc;
+}
+
+form .date-picker .dates .month .arrows {
+  width: 35px;
+  height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #222831;
+  font-size: 20px;
+}
+
+form .date-picker .dates .month .arrows:hover {
+  background-color: #cccccc;
+}
+
+form .date-picker .dates .month .arrows:active {
+  background-color: #00adb5;
 }
 
 form .date-picker .dates .days {
@@ -284,48 +358,20 @@ form .date-picker .dates .days .day {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: #313131;
+  color: #222831;
 }
 
-form .date-picker .dates .days .date-picker .dates .days .day.selected {
-  background-color: #00CA85;
+form .date-picker .dates .days .day:hover {
+  background-color: #00adb5;
 }
 
-form .date-picker .dates .month {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-bottom: 2px solid #EEE;
+form .date-picker .dates .days .day.selected {
+  background-color: #37414f;
+  color: #eeeeee;
 }
 
-form .date-picker .dates .month .arrows {
-  width: 35px;
-  height: 35px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: #313131;
-  font-size: 20px;
-}
-
-form .date-picker .dates .month .arrows:hover {
-  background-color: #F3F3F3;
-}
-
-form .date-picker .dates .month .arrows:active {
-  background-color: #00CA85;
+form .date-picker .dates.active {
+  display: block;
 }
 
 form .date-picker:hover {
@@ -362,7 +408,7 @@ form .kids input {
   text-align: center;
   width: 30%;
   height: 30%;
-  border-radius: 14px;
+  border-radius: 1rem;
   outline: none;
   padding-left: 1rem;
   font-size: 1.5rem;
@@ -393,11 +439,13 @@ form .btn_bt {
   text-decoration: none;
   font-size: 1rem;
   border: none;
+  border-radius: 1rem;
   -webkit-transition: background-color .5s ease;
   transition: background-color .5s ease;
 }
 
 form .btn_bt:hover {
   background-color: #00adb5;
+  cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */

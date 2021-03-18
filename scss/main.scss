@@ -51,8 +51,12 @@ nav {
             font-weight: weight(medium);
             font-size: 1rem;
         }
-
     }
+}
+
+input[type=text] {
+    background-color: $text-color;
+    width: 100%;
 }
 
 form {
@@ -63,19 +67,51 @@ form {
     height: 92vh;
 
     .autocomplete {
+        position: relative;
+        display: inline-block;
 
         input {
             width: 100%;
             height: 100%;
-            border-radius: 14px;
+            border-radius: 1rem;
             outline: none;
             padding-left: 1rem;
             font-size: 1.5rem;
             border: 2px solid transparent;
             color: $text-color;
             background-color: $accent-background-color;
+
         }
 
+        .autocomplete-items {
+            position: absolute;
+            border: 2px solid $text-color;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            font-size: 1.2rem;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .autocomplete-active {
+            background-color: $contrast-color !important;
+            color: $accent-background-color;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: $text-hover-color;
+            border-bottom: 2px solid $text-hover-color;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: darken($contrast-color, 5%);
+        }
     }
 
     .auto1 {
@@ -165,79 +201,88 @@ form {
         cursor: pointer;
         user-select: none;
         transition: background-color .5s ease;
+
+        .selected-date {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: $text-color;
+            font-size: 28px;
+        }
+
+        .dates {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            color: $accent-background-color;
+
+
+            background-color: $text-color;
+
+            .month {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 2px solid $text-hover-color;
+
+                .arrows {
+                    width: 35px;
+                    height: 35px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: $accent-background-color;
+                    font-size: 20px;
+                }
+
+                .arrows:hover {
+                    background-color: $text-hover-color;
+                }
+
+                .arrows:active {
+                    background-color: $contrast-color;
+                }
+            }
+
+            .days {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                height: 200px;
+
+                .day {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: $accent-background-color;
+                }
+
+                .day:hover {
+                    background-color: $contrast-color;
+                }
+
+                .day.selected {
+                    background-color: lighten($accent-background-color, 10%);
+                    color: $text-color;
+                }
+
+            }
+        }
+
+        .dates.active {
+            display: block;
+        }
     }
 
     .date-picker:hover {
         background-color: $contrast-color;
     }
 
-    .date-picker .selected-date {
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        color: $text-color;
-        font-size: 28px;
-    }
-
-    .date-picker .dates {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-
-        background-color: #FFF;
-    }
-
-    .date-picker .dates.active {
-        display: block;
-    }
-
-    .date-picker .dates .month {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #EEE;
-    }
-
-    .date-picker .dates .month .arrows {
-        width: 35px;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #313131;
-        font-size: 20px;
-    }
-
-    .date-picker .dates .month .arrows:hover {
-        background-color: #F3F3F3;
-    }
-
-    .date-picker .dates .month .arrows:active {
-        background-color: #00CA85;
-    }
-
-    .date-picker .dates .days {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        height: 200px;
-    }
-
-    .date-picker .dates .days .day {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #313131;
-    }
-
-    .date-picker .dates .days .day.selected {
-        background-color: #00CA85;
-    }
 
     //Passengers
     .adults,
@@ -257,7 +302,7 @@ form {
             text-align: center;
             width: 30%;
             height: 30%;
-            border-radius: 14px;
+            border-radius: 1rem;
             outline: none;
             padding-left: 1rem;
             font-size: 1.5rem;
@@ -265,7 +310,6 @@ form {
             color: $text-color;
             background-color: $accent-background-color;
         }
-
     }
 
     .kids {
@@ -285,11 +329,13 @@ form {
         text-decoration: none;
         font-size: 1rem;
         border: none;
+        border-radius: 1rem;
         transition: background-color .5s ease;
     }
 
     .btn_bt:hover {
         background-color: $contrast-color;
+        cursor: pointer;
     }
 
 }

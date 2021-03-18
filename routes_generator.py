@@ -1,6 +1,6 @@
 from  os import system, path, name, mkdir
 from sys import exit
-from db_model import db_name, db, Routes, Unique_stations, Route_nodes, path_to_db
+from flask_databse import db_name, db, Routes, Unique_stations, Route_nodes, path_to_db
 from datetime import datetime, timedelta
 import random
 
@@ -35,7 +35,7 @@ check_for_db()
 unique_statons = [x.station_name for x in Unique_stations.query.all()]
 system("pause")
 system('cls' if name == 'nt' else 'clear')
-print("You can begin to pase raw routes copied from https://radar.bdz.bg/bg\nType `end` to quit.")
+print("You can begin to pase raw routes copied from https://radar.bdz.bg/bg \nType `end` to quit.")
 while (raw_route_info := input("\n>>>").strip()) != "end":
     
 

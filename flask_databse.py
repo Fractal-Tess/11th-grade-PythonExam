@@ -1,10 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
+from flask_app import app
 
 db_name = "routes.db"
-path_to_db = "../database/"
-app = Flask(__name__)
+path_to_db = "database/"
+
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{path_to_db}{db_name}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Unique_stations(db.Model):

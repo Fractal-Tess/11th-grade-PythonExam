@@ -127,12 +127,7 @@ function clear_description() {
   timings.innerText = "Timings:";
 }
 
-//grws = get routes with starting station
-function destenation_field() {}
-
 function autocomplete(inp, arr, callback) {
-  /*The autocomplete function takes two parameters:
-  The text field element and an array of possible autocompleted values:*/
   var currentFocus;
 
   /*execute a function when it's  writen in the text field:*/
