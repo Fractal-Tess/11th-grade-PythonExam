@@ -15,12 +15,18 @@
     <div class="autocomplete auto2">
         <input id="eStation" type="text" placeholder="End station">
     </div>
+    <!-- Autocomplete end -->
 
     <!-- Labels -->
     <h3 type="text" class="label l1">From</h3>
     <h3 type="text" class="label l2">To</h3>
     <h3 type="text" class="label l3">When</h3>
+    <!-- Labels end -->
 
+    <!-- Checkers -->
+    <div class="checker ch1" id="ch1"></div>
+    <div class="checker ch2" id="ch2"></div>
+    <!-- Checkers end -->
 
     <!-- Ticket information -->
     <label type="text" class="info ti1" id='l_route'>Route:Lorem ipsum dolor sit.</label>
@@ -28,7 +34,9 @@
     <label type="text" class="info ti3" id='l_to'>To:Lorem ipsum dolor sit.</label>
     <label type="text" class="info ti4" id='l_when_board'>When You board:Station, time & date</label>
     <label type="text" class="info ti5" id='l_get_off'>When You get off:Station, time & date</label>
-    <!-- When -->
+    <!-- Ticket information end -->
+
+    <!-- Date -->
     <div class="date-picker">
         <div class="selected-date"></div>
         <div class="dates">
@@ -41,8 +49,9 @@
             <div class="days"></div>
         </div>
     </div>
-    <!-- End when -->
-    <!-- passengers -->
+    <!-- Date end when -->
+
+    <!-- passengers quantity -->
     <div class="adults">
         <label type="text">Adults: </label>
         <input type="number" min="0" max="9" step="1" value="1">
@@ -51,7 +60,8 @@
         <label type="text">Kids: </label>
         <input type="number" min="0" max="9" step="1" value="0">
     </div>
-    <!-- end passengers -->
+    <!-- end passengers quantity -->
+
     <!-- Buy button -->
     <button class="btn_bt">Buy ticket</button>
     <!-- End buy button -->

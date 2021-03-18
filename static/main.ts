@@ -1,11 +1,23 @@
 // Socket Io
 // import { io } from "socket.io-client";
-const socket = io()
+const socket = io();
 
+// Variables
+const suggestions_amount = 10;
 
 // Input fields
 const starting_station_input_field = document.getElementById('sStation')! as HTMLInputElement
 const ending_station_input_field = document.getElementById('eStation')! as HTMLInputElement
+var starting_station_verified = false;
+var ending_station_verified = false;
+
+
+// Checkers
+const sStation_checker = document.getElementById("ch1")! as HTMLDivElement
+const eStation_checker = document.getElementById("ch2")! as HTMLDivElement
+
+sStation_checker.style.display = "none";
+eStation_checker.style.display = "none";
 
 // Labels
 const l_route = document.getElementById("l_route")!as HTMLLabelElement
@@ -23,22 +35,40 @@ socket.on("connect", () =>{
     console.log("Connected with SocketIO")
 })
 
-// Get all unique stations
-socket.emit("server-gateway", {opcode:"get_unique_station_names"})
+function getData(opcodein:string){
+  socket.emit("server-gateway", {opcode:opcodein})
+}
+getData("get_unique_station_names");
+
+// listen to server responses
 socket.on("server-get-unique-response", (data:string[]) =>{
     data.forEach(stationName => {
         uniqueStations.push(stationName)
     });
+  //Enable the autocomplete for Starting station
+  autocomplete(starting_station_input_field, uniqueStations, sStation_checker)
 })
 
-autocomplete(starting_station_input_field, uniqueStations)
 
+function verifierSwitcher(id:string, state:boolean){
+  if (id === starting_station_input_field.id){
+    starting_station_verified = state;
+    if (starting_station_verified){
 
-function autocomplete(inp: HTMLInputElement, arr: string[]) {
-  var currentFocus: number;
+    }
+  }
+  else if (id === ending_station_input_field.id){
+    ending_station_verified = state;
+  }
+}
 
+function autocomplete(inp: HTMLInputElement, arr: string[], checker:HTMLDivElement) :void{
+  var currentFocus: number, z:HTMLCollection;
     // Execute this when it's written in the input field
   inp.addEventListener("input", function(e) {
+    checker.style.display="none";
+    verifierSwitcher(this.id, false);
+
       var a:HTMLDivElement,
        b:HTMLDivElement,
         i:number,
@@ -47,29 +77,32 @@ function autocomplete(inp: HTMLInputElement, arr: string[]) {
           val:string = this.value;
       for (j = 0; j < arr.length; j++){
         if (capitalizeFirstLetter(val) === arr[j]){
-          console.log("We have a match");
+          // If the input field has the save value as any station in the list from the server
+          // Then we have a match.
           inp.value = arr[j];
+          checker.style.display="block";
+          verifierSwitcher(this.id, true);
           closeAllLists(null);
           return;
         } 
       }
-      /*close any already open lists of autocompleted values*/
+      // Close any open lists
       closeAllLists(null);
-      if(!val) { return null;}      
-      currentFocus = -1;
+      if(!val) return;     
 
+      currentFocus = -1;
       // Create div element that will hold all autocomplete suggestions
       a = document.createElement("div");
       a.setAttribute("id", this.id + "autocomplete-list");
       a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
-      this.parentNode.appendChild(a);
-      /*for each item in the array...*/
+      // append the DIV element as a child of the autocomplete container
+      this.parentNode!.appendChild(a);
       for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
+        // Check if the current val is anywhere inside the given array
         if (arr[i].toUpperCase().includes(val.toUpperCase())){
           suggestions++;
-          if (suggestions > 10){
+          if (suggestions > suggestions_amount){
+            // No more than suggestions_amount suggestions
             break;
           }
           /*create a DIV element for each matching element:*/
@@ -81,6 +114,8 @@ function autocomplete(inp: HTMLInputElement, arr: string[]) {
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
+              checker.style.display="block";
+              verifierSwitcher(inp.id, true);
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
               closeAllLists(null);
@@ -92,52 +127,59 @@ function autocomplete(inp: HTMLInputElement, arr: string[]) {
 
   /*execute a function presses a key on the keyboard:*/
   inp.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
+      var x = document.getElementById(this.id + "autocomplete-list")! as HTMLDivElement;
+      if (x) {
+        z = x.getElementsByTagName("div")! as HTMLCollection;
+      }
       if (e.keyCode == 40) {
         /*If the arrow DOWN key is pressed,
         increase the currentFocus variable:*/
         currentFocus++;
         /*and and make the current item more visible:*/
-        addActive(x);
+        addActive(z);
       } else if (e.keyCode == 38) { //up
         /*If the arrow UP key is pressed,
         decrease the currentFocus variable:*/
         currentFocus--;
         /*and and make the current item more visible:*/
-        addActive(x);
+        addActive(z);
       } else if (e.keyCode == 13) {
         /*If the ENTER key is pressed, prevent the form from being submitted,*/
         e.preventDefault();
         if (currentFocus > -1) {
           /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click();
+          var c = z[currentFocus] as HTMLDivElement
+          if (z) c.click();
+          verifierSwitcher(inp.id, true);
+          checker.style.display="block";
         }
       }
   });
-  function addActive(x) {
+  // Helper functions
+  function addActive(z:HTMLCollection){
     /*a function to classify an item as "active":*/
-    if (!x) return false;
+    if (!z) return false;
     /*start by removing the "active" class on all items:*/
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
+    removeActive(z);
+    if (currentFocus >= z.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (z.length - 1);
     /*add class "autocomplete-active":*/
-    x[currentFocus].classList.add("autocomplete-active");
+    z[currentFocus].classList.add("autocomplete-active");
   }
-  function removeActive(x) {
+  function removeActive(z:HTMLCollection) {
     /*a function to remove the "active" class from all autocomplete items:*/
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
+    if(!z) return false;
+    for (var i = 0; i < z.length; i++) {
+      z[i].classList.remove("autocomplete-active");
     }
   }
-  function closeAllLists(elmnt) {
+  function closeAllLists(elmnt:any):void {
     /*close all autocomplete lists in the document,
     except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
+    var x = document.getElementsByClassName("autocomplete-items")! as HTMLCollection;
     for (var i = 0; i < x.length; i++) {
       if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
+        x[i].parentNode!.removeChild(x[i]);
       }
     }
   }

@@ -105,6 +105,15 @@ function populateDates(e) {
 
     day_element.addEventListener("click", function () {
       selectedDate = new Date(year + "-" + (month + 1) + "-" + (i + 1));
+
+      let ss = new Date();
+
+      if (selectedDate.getDate() < ss.getDate()) {
+        if (selectedDate.getMonth() <= ss.getMonth()) {
+          console.log("You cannot select an already past Date!");
+          return;
+        }
+      }
       selectedDay = i + 1;
       selectedMonth = month;
       selectedYear = year;
@@ -112,10 +121,6 @@ function populateDates(e) {
       dates_element.classList.toggle("active");
 
       // Here!
-      console.log(selectedDay);
-      console.log(selectedMonth);
-      console.log(selectedYear);
-
       selected_date_element.textContent = formatDate(selectedDate);
       selected_date_element.dataset.value = selectedDate;
 

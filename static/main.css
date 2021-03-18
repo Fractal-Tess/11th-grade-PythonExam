@@ -87,6 +87,34 @@ form {
   height: 92vh;
 }
 
+form .checker {
+  position: relative;
+  left: 75%;
+  top: 40%;
+  -ms-grid-column: 7;
+  -ms-grid-column-span: 1;
+  grid-column: 7/8;
+  z-index: 98;
+  -webkit-transform: rotate(45deg) translate(0, -40%);
+          transform: rotate(45deg) translate(0, -40%);
+  height: 1.5rem;
+  width: 0.75rem;
+  border-bottom: 0.3rem solid #00adb5;
+  border-right: 0.3rem solid #00adb5;
+}
+
+form .ch1 {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+}
+
+form .ch2 {
+  -ms-grid-row: 4;
+  -ms-grid-row-span: 1;
+  grid-row: 4/5;
+}
+
 form .autocomplete {
   position: relative;
   display: inline-block;
