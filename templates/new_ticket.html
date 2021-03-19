@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}{{title}}{% endblock %}
-{% block head %}<script defer src="{{url_for('static', filename='datepicker.js')}}"></script>
-<script defer src="{{url_for('static', filename='main.js')}}"></script>
+{% block head %}
+<script>
+    var exports = {};
+</script>
+<script defer type="module" src="{{url_for('static', filename='new-ticket_main.js')}}"></script>
 {% endblock %}
 
 {% block content %}
@@ -29,9 +32,9 @@
     <!-- Checkers end -->
 
     <!-- Ticket information -->
-    <label type="text" class="info ti1" id='l_route'>Route:Lorem ipsum dolor sit.</label>
-    <label type="text" class="info ti2" id='l_from'>From:Lorem ipsum dolor sit.</label>
-    <label type="text" class="info ti3" id='l_to'>To:Lorem ipsum dolor sit.</label>
+    <label type="text" class="info ti1" id='l_route'>Route:</label>
+    <label type="text" class="info ti2" id='l_from'>From:</label>
+    <label type="text" class="info ti3" id='l_to'>To:</label>
     <label type="text" class="info ti4" id='l_when_board'>When You board:Station, time & date</label>
     <label type="text" class="info ti5" id='l_get_off'>When You get off:Station, time & date</label>
     <!-- Ticket information end -->
@@ -54,11 +57,11 @@
     <!-- passengers quantity -->
     <div class="adults">
         <label type="text">Adults: </label>
-        <input type="number" min="0" max="9" step="1" value="1">
+        <input type="number" min="0" max="9" id="adults" value="1">
     </div>
     <div class="kids">
         <label type="text">Kids: </label>
-        <input type="number" min="0" max="9" step="1" value="0">
+        <input type="number" min="0" max="9" id="kids" value="0">
     </div>
     <!-- end passengers quantity -->
 

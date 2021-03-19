@@ -1,9 +1,9 @@
 // Socket Io
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 const socket = io();
 
-// Variables
-const suggestions_amount = 10;
+// Autocomplete suggestions
+const suggestions_amount = 4;
 
 // Input fields
 const starting_station_input_field = document.getElementById('sStation')! as HTMLInputElement
@@ -26,19 +26,40 @@ const l_to = document.getElementById('l_to')!as HTMLLabelElement
 const l_when_board = document.getElementById('l_when_board')!as HTMLLabelElement
 const l_get_off = document.getElementById('l_get_off')!as HTMLLabelElement
 // document.getElementsByClassName("l_get_off")[0]! as HTMLInputElement
-// ...Let's just give them IDS
+// Nvm...Let's just give them IDS
 
+const adults_inp_field = document.getElementById('adults')! as HTMLInputElement
+const kids_inp_field = document.getElementById('kids')! as HTMLInputElement
+
+//Init an empty list that will hold ALL UNIQUE stations
 const uniqueStations:string[] = [];
+
+// Ticket object
+const ticket = {
+  route_name:"",
+  starting_station:"",
+  ending_station:"",
+  timeArrives_at_starting_station:"",
+  timeDeparts_from_starting_station:"",
+  timeArrives_at_end_station:"",
+  timeDeparts_from_end_station:"",
+  date:"",
+  adults: 1,
+  kids:0,
+
+}
+
 
 // On established connection
 socket.on("connect", () =>{
     console.log("Connected with SocketIO")
 })
 
-function getData(opcodein:string){
-  socket.emit("server-gateway", {opcode:opcodein})
+function requestData(opcodein:string, starting_staiton:string = ""){
+  socket.emit("server-gateway", {opcode:opcodein, station_name:starting_staiton})
 }
-getData("get_unique_station_names");
+// Request unique stations
+requestData("get_unique_station_names");
 
 // listen to server responses
 socket.on("server-get-unique-response", (data:string[]) =>{
@@ -49,18 +70,54 @@ socket.on("server-get-unique-response", (data:string[]) =>{
   autocomplete(starting_station_input_field, uniqueStations, sStation_checker)
 })
 
+function clearInfo(){
+  l_route.innerText = "Route:In dev"
+  l_from.innerText = "From:  "
+  l_to.innerText = "To:  "
+}
+function infoConstructor(){
+  l_route.innerText = "Route:In dev"
+  l_from.innerText = "From:  " + starting_station_input_field.value
+  l_to.innerText = "To:  " + ending_station_input_field.value
+}
 
+function ticketConstructor(){
+  ticket.starting_station = starting_station_input_field.value;
+  ticket.ending_station = ending_station_input_field.value;
+  // Construct the other
+}
 function verifierSwitcher(id:string, state:boolean){
   if (id === starting_station_input_field.id){
     starting_station_verified = state;
     if (starting_station_verified){
-
+      requestData("get_connected_stations", starting_station_input_field.value)
     }
+    else clearInfo();
   }
   else if (id === ending_station_input_field.id){
     ending_station_verified = state;
+    if(ending_station_verified && starting_station_verified){
+
+      ticketConstructor();
+      infoConstructor();
+    }
+    else if (!ending_station_verified) clearInfo();
   }
 }
+socket.on("server-get-stations-linked-to-station", (data:string[]) =>{
+  autocomplete(ending_station_input_field, data, eStation_checker)
+});
+
+quantityLimiter(adults_inp_field, "Cannot register more than 9 adults")
+quantityLimiter(kids_inp_field, "Cannot register more than 9 kids")
+function quantityLimiter(elmnt:HTMLInputElement, message:string){
+  elmnt.addEventListener("input", function(e){
+    if (+this.value > 9){
+      console.log(message)
+      this.value = "9"
+    }
+})}
+
 
 function autocomplete(inp: HTMLInputElement, arr: string[], checker:HTMLDivElement) :void{
   var currentFocus: number, z:HTMLCollection;

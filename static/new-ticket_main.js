@@ -1,6 +1,10 @@
+"use strict";
+exports.__esModule = true;
 // Socket Io
-// import { io } from "socket.io-client";
-var socket = io();
+var socket_io_client_1 = require("socket.io-client");
+var socket = socket_io_client_1.io();
+// Autocomplete suggestions
+var suggestions_amount = 4;
 // Input fields
 var starting_station_input_field = document.getElementById('sStation');
 var ending_station_input_field = document.getElementById('eStation');
@@ -18,38 +22,95 @@ var l_to = document.getElementById('l_to');
 var l_when_board = document.getElementById('l_when_board');
 var l_get_off = document.getElementById('l_get_off');
 // document.getElementsByClassName("l_get_off")[0]! as HTMLInputElement
-// ...Let's just give them IDS
+// Nvm...Let's just give them IDS
+var adults_inp_field = document.getElementById('adults');
+var kids_inp_field = document.getElementById('kids');
+//Init an empty list that will hold ALL UNIQUE stations
 var uniqueStations = [];
+// Ticket object
+var ticket = {
+    route_name: "",
+    starting_station: "",
+    ending_station: "",
+    timeArrives_at_starting_station: "",
+    timeDeparts_from_starting_station: "",
+    timeArrives_at_end_station: "",
+    timeDeparts_from_end_station: "",
+    date: "",
+    adults: 1,
+    kids: 0
+};
 // On established connection
 socket.on("connect", function () {
     console.log("Connected with SocketIO");
 });
-// Get all unique stations
-socket.emit("server-gateway", { opcode: "get_unique_station_names" });
+function requestData(opcodein, starting_staiton) {
+    if (starting_staiton === void 0) { starting_staiton = ""; }
+    socket.emit("server-gateway", { opcode: opcodein, station_name: starting_staiton });
+}
+// Request unique stations
+requestData("get_unique_station_names");
+// listen to server responses
 socket.on("server-get-unique-response", function (data) {
     data.forEach(function (stationName) {
         uniqueStations.push(stationName);
     });
+    //Enable the autocomplete for Starting station
+    autocomplete(starting_station_input_field, uniqueStations, sStation_checker);
 });
-//Enable the autocomplete for Starting station
-autocomplete(starting_station_input_field, uniqueStations, sStation_checker);
-function switchVerifier(id, state) {
+function clearInfo() {
+    l_route.innerText = "Route:In dev";
+    l_from.innerText = "From:  ";
+    l_to.innerText = "To:  ";
+}
+function infoConstructor() {
+    l_route.innerText = "Route:In dev";
+    l_from.innerText = "From:  " + starting_station_input_field.value;
+    l_to.innerText = "To:  " + ending_station_input_field.value;
+}
+function ticketConstructor() {
+    ticket.starting_station = starting_station_input_field.value;
+    ticket.ending_station = ending_station_input_field.value;
+    // Construct the other
+}
+function verifierSwitcher(id, state) {
     if (id === starting_station_input_field.id) {
         starting_station_verified = state;
+        if (starting_station_verified) {
+            requestData("get_connected_stations", starting_station_input_field.value);
+        }
+        else
+            clearInfo();
     }
     else if (id === ending_station_input_field.id) {
         ending_station_verified = state;
+        if (ending_station_verified && starting_station_verified) {
+            ticketConstructor();
+            infoConstructor();
+        }
+        else if (!ending_station_verified)
+            clearInfo();
     }
 }
-setInterval(function () {
-    console.log(starting_station_verified);
-}, 500);
+socket.on("server-get-stations-linked-to-station", function (data) {
+    autocomplete(ending_station_input_field, data, eStation_checker);
+});
+quantityLimiter(adults_inp_field, "Cannot register more than 9 adults");
+quantityLimiter(kids_inp_field, "Cannot register more than 9 kids");
+function quantityLimiter(elmnt, message) {
+    elmnt.addEventListener("input", function (e) {
+        if (+this.value > 9) {
+            console.log(message);
+            this.value = "9";
+        }
+    });
+}
 function autocomplete(inp, arr, checker) {
     var currentFocus, z;
     // Execute this when it's written in the input field
     inp.addEventListener("input", function (e) {
         checker.style.display = "none";
-        switchVerifier(this.id, false);
+        verifierSwitcher(this.id, false);
         var a, b, i, j, suggestions = 0, val = this.value;
         for (j = 0; j < arr.length; j++) {
             if (capitalizeFirstLetter(val) === arr[j]) {
@@ -57,29 +118,28 @@ function autocomplete(inp, arr, checker) {
                 // Then we have a match.
                 inp.value = arr[j];
                 checker.style.display = "block";
-                switchVerifier(this.id, true);
+                verifierSwitcher(this.id, true);
                 closeAllLists(null);
                 return;
             }
         }
         // Close any open lists
         closeAllLists(null);
-        if (!val) {
-            return null;
-        }
+        if (!val)
+            return;
         currentFocus = -1;
         // Create div element that will hold all autocomplete suggestions
         a = document.createElement("div");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
-        /*append the DIV element as a child of the autocomplete container:*/
+        // append the DIV element as a child of the autocomplete container
         this.parentNode.appendChild(a);
-        /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
-            /*check if the item starts with the same letters as the text field value:*/
+            // Check if the current val is anywhere inside the given array
             if (arr[i].toUpperCase().includes(val.toUpperCase())) {
                 suggestions++;
-                if (suggestions > 10) {
+                if (suggestions > suggestions_amount) {
+                    // No more than suggestions_amount suggestions
                     break;
                 }
                 /*create a DIV element for each matching element:*/
@@ -92,7 +152,7 @@ function autocomplete(inp, arr, checker) {
                     /*insert the value for the autocomplete text field:*/
                     inp.value = this.getElementsByTagName("input")[0].value;
                     checker.style.display = "block";
-                    switchVerifier(inp.id, true);
+                    verifierSwitcher(inp.id, true);
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
                     closeAllLists(null);
@@ -129,7 +189,7 @@ function autocomplete(inp, arr, checker) {
                 var c = z[currentFocus];
                 if (z)
                     c.click();
-                switchVerifier(inp.id, true);
+                verifierSwitcher(inp.id, true);
                 checker.style.display = "block";
             }
         }
