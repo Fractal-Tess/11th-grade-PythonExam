@@ -1,8 +1,6 @@
-"use strict";
-exports.__esModule = true;
 // Socket Io
-var socket_io_client_1 = require("socket.io-client");
-var socket = socket_io_client_1.io();
+import { io } from "socket.io-client";
+var socket = io();
 // Autocomplete suggestions
 var suggestions_amount = 4;
 // Input fields
@@ -38,7 +36,7 @@ var ticket = {
     timeDeparts_from_end_station: "",
     date: "",
     adults: 1,
-    kids: 0
+    kids: 0,
 };
 // On established connection
 socket.on("connect", function () {
@@ -136,7 +134,7 @@ function autocomplete(inp, arr, checker) {
         this.parentNode.appendChild(a);
         for (i = 0; i < arr.length; i++) {
             // Check if the current val is anywhere inside the given array
-            if (arr[i].toUpperCase().includes(val.toUpperCase())) {
+            if (arr[i].toUpperCase() === val.toUpperCase()) {
                 suggestions++;
                 if (suggestions > suggestions_amount) {
                     // No more than suggestions_amount suggestions

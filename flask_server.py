@@ -3,9 +3,9 @@ from flask import render_template
 from flask_app import app
 from flask_socketio import SocketIO
 from flask_databse import Route_nodes, Routes, Unique_stations, db
+# Flask return text/plain mim types... This does nothing.
+# Fix was reg monkey patch.
 import mimetypes
-
-
 mimetypes.guess_type("notExists.js")
 ('text/javascript', None)
 
@@ -22,6 +22,14 @@ def index():
 @app.route('/new-ticket')
 def new_ticket():
     return render_template("new_ticket.html" , title="New-Ticket")
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """404 Error handler"""
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
+
 
 @socketio.on("server-gateway")
 def endpoint(data):

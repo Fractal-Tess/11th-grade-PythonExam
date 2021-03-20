@@ -2,10 +2,7 @@
 
 {% block title %}{{title}}{% endblock %}
 {% block head %}
-<script>
-    var exports = {};
-</script>
-<script defer type="module" src="{{url_for('static', filename='new-ticket_main.js')}}"></script>
+<script defer type="module" src="{{url_for('static', filename='dist/bundle.js')}}"></script>
 {% endblock %}
 
 {% block content %}

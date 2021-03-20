@@ -1,6 +1,5 @@
 // Socket Io
-import { io } from "socket.io-client";
-const socket = io();
+const socket = require('socket.io-client')();
 
 // Autocomplete suggestions
 const suggestions_amount = 4;
@@ -156,7 +155,7 @@ function autocomplete(inp: HTMLInputElement, arr: string[], checker:HTMLDivEleme
       this.parentNode!.appendChild(a);
       for (i = 0; i < arr.length; i++) {
         // Check if the current val is anywhere inside the given array
-        if (arr[i].toUpperCase().includes(val.toUpperCase())){
+        if (arr[i].toUpperCase() === val.toUpperCase()){
           suggestions++;
           if (suggestions > suggestions_amount){
             // No more than suggestions_amount suggestions

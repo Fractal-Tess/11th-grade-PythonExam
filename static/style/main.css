@@ -20,8 +20,50 @@ input::-webkit-inner-spin-button {
 
 html,
 body {
+  overflow: hidden;
   font-family: 'Poppins', sans-serif;
   background: #2e333a;
+  height: 100%;
+}
+
+.not_found_wrapper {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 1rem;
+}
+
+.not_found_wrapper a {
+  color: #00adb5;
+  border-bottom: 3px solid #00adb5;
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  font-weight: 800;
+}
+
+.not_found_wrapper p {
+  font-size: 1rem;
+}
+
+.not_found_wrapper img {
+  height: 50%;
+  width: auto;
+  -webkit-box-shadow: 0px 0.2rem 1rem rgba(0, 0, 0, 0.507);
+          box-shadow: 0px 0.2rem 1rem rgba(0, 0, 0, 0.507);
+}
+
+.not_found_wrapper * {
+  margin: 1rem;
 }
 
 nav {
@@ -35,6 +77,8 @@ nav {
           align-items: center;
   min-height: 8vh;
   background: #222831;
+  -webkit-box-shadow: 0px 0.2rem 1rem rgba(0, 0, 0, 0.397);
+          box-shadow: 0px 0.2rem 1rem rgba(0, 0, 0, 0.397);
 }
 
 .logo a {
