@@ -2,9 +2,9 @@ const path = require("path");
 
 module.exports = {
   devtool: "eval-source-map",
-  mode: "development",
-  entry: "./src/index.ts",
-  // entry: "./src/ticket_check.ts",
+  mode: "production",
+  // entry: "./src/index.ts",
+  entry: "./src/ticket_check.ts",
   module: {
     rules: [
       {
@@ -18,8 +18,8 @@ module.exports = {
     extensions: [".ts", ".js"],
   },
   output: {
-    filename: "bundle.js",
-    // filename: "ticket_check.js",
+    // filename: "bundle.js",
+    filename: "ticket_check.js",
     path: path.resolve(__dirname, "static/dist/"),
   },
 };
