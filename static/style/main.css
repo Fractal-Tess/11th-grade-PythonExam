@@ -120,6 +120,38 @@ input[type=text] {
   width: 100%;
 }
 
+.informative-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.informative-wrapper p:nth-child(2) {
+  font-size: 2rem;
+}
+
+.informative-wrapper p:nth-child(2) strong {
+  color: #00adb5;
+  text-decoration: underline;
+  text-underline-offset: .5rem;
+}
+
+.informative-wrapper p {
+  font-weight: 800;
+  font-size: 1.2rem;
+  padding: 2rem;
+}
+
 form {
   display: -ms-grid;
   display: grid;
@@ -129,6 +161,46 @@ form {
       grid-template-rows: repeat(10, 1fr);
   height: 100%;
   height: 92vh;
+}
+
+form .styled-table {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 8;
+  grid-column: 2/10;
+  -ms-grid-row: 4;
+  -ms-grid-row-span: 1;
+  grid-row: 4/5;
+  border-collapse: collapse;
+  height: 100%;
+  width: 100%;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+form .styled-table thead tr {
+  background-color: #00adb5;
+  color: #eeeeee;
+  text-align: left;
+}
+
+form .styled-table th,
+form .styled-table td {
+  padding: 12px 15px;
+  color: #eeeeee;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+form .styled-table tbody tr {
+  border: thin solid #00adb5;
+}
+
+form .styled-table tbody tr:nth-of-type(odd) {
+  background-color: #222831;
 }
 
 form .checker {
@@ -159,13 +231,29 @@ form .ch2 {
   grid-row: 4/5;
 }
 
+form .ch3 {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 8;
+  -ms-grid-column-span: 1;
+  grid-column: 8/9;
+  position: relative;
+  left: 45%;
+}
+
 form .autocomplete {
   position: relative;
   display: inline-block;
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 4;
+  grid-column: 4/8;
   /*when hovering an item:*/
 }
 
 form .autocomplete input {
+  -webkit-box-shadow: 0 0 1rem #222831;
+          box-shadow: 0 0 1rem #222831;
   width: 100%;
   height: 100%;
   border-radius: 1rem;
@@ -207,21 +295,56 @@ form .autocomplete .autocomplete-items div:hover {
 }
 
 form .auto1 {
-  -ms-grid-column: 4;
-  -ms-grid-column-span: 4;
-  grid-column: 4/8;
   -ms-grid-row: 2;
   -ms-grid-row-span: 1;
   grid-row: 2/3;
 }
 
 form .auto2 {
-  -ms-grid-column: 4;
-  -ms-grid-column-span: 4;
-  grid-column: 4/8;
   -ms-grid-row: 4;
   -ms-grid-row-span: 1;
   grid-row: 4/5;
+}
+
+form .check-ticket {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  grid-row: 2/3;
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 6;
+  grid-column: 3/9;
+}
+
+form .route-selector {
+  -ms-grid-row: 9;
+  -ms-grid-row-span: 1;
+  grid-row: 9/10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: hidden;
+  -ms-grid-column: 4;
+  -ms-grid-column-span: 4;
+  grid-column: 4/8;
+}
+
+form .route-selector select {
+  -webkit-box-shadow: 0 0 1rem #222831;
+          box-shadow: 0 0 1rem #222831;
+  height: 75%;
+  width: 75%;
+  border: none;
+  outline: none;
+  background: #37414f;
+  border-radius: .5rem;
+  padding-left: .5rem;
+  font-size: 1.3rem;
 }
 
 form .label {
@@ -234,83 +357,82 @@ form .label {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -ms-grid-column: 5;
+  -ms-grid-column-span: 2;
+  grid-column: 5/7;
 }
 
 form .l1 {
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1/2;
-  -ms-grid-column: 5;
-  -ms-grid-column-span: 2;
-  grid-column: 5/7;
 }
 
 form .l2 {
   -ms-grid-row: 3;
   -ms-grid-row-span: 1;
   grid-row: 3/4;
-  -ms-grid-column: 5;
-  -ms-grid-column-span: 2;
-  grid-column: 5/7;
 }
 
 form .l3 {
   -ms-grid-row: 5;
   -ms-grid-row-span: 1;
   grid-row: 5/6;
-  -ms-grid-column: 5;
-  -ms-grid-column-span: 2;
-  grid-column: 5/7;
 }
 
-form .info {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
-  grid-column: 1/3;
-  font-weight: 300;
-  padding-left: 2rem;
-}
-
-form .ti1 {
-  -ms-grid-row: 6;
-  -ms-grid-row-span: 1;
-  grid-row: 6/7;
-}
-
-form .ti2 {
-  -ms-grid-row: 7;
-  -ms-grid-row-span: 1;
-  grid-row: 7/8;
-}
-
-form .ti3 {
+form .l4 {
+  pointer-events: none;
+  position: relative;
+  top: 2rem;
   -ms-grid-row: 8;
   -ms-grid-row-span: 1;
   grid-row: 8/9;
 }
 
-form .ti4 {
-  -ms-grid-row: 9;
-  -ms-grid-row-span: 1;
-  grid-row: 9/10;
-  -ms-grid-column: 1;
+form .info {
+  font-size: 1.1rem;
+  -ms-grid-column: 8;
   -ms-grid-column-span: 3;
-  grid-column: 1/4;
+  grid-column: 8/11;
+  font-weight: 300;
+  padding-right: 2vw;
+  text-align: right;
+}
+
+form .ti1 {
+  -ms-grid-row: 3;
+  -ms-grid-row-span: 1;
+  grid-row: 3/4;
+}
+
+form .ti2 {
+  -ms-grid-row: 4;
+  -ms-grid-row-span: 1;
+  grid-row: 4/5;
+}
+
+form .ti3 {
+  -ms-grid-row: 5;
+  -ms-grid-row-span: 1;
+  grid-row: 5/6;
+}
+
+form .ti4 {
+  -ms-grid-row: 6;
+  -ms-grid-row-span: 1;
+  grid-row: 6/7;
 }
 
 form .ti5 {
-  -ms-grid-row: 10;
+  -ms-grid-row: 7;
   -ms-grid-row-span: 1;
-  grid-row: 10/11;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 3;
-  grid-column: 1/4;
+  grid-row: 7/8;
+}
+
+form .ti6 {
+  -ms-grid-row: 8;
+  -ms-grid-row-span: 1;
+  grid-row: 8/9;
 }
 
 form #date {
@@ -322,7 +444,7 @@ form #date {
   grid-row: 6/7;
 }
 
-form .date-picker {
+form .date-picker-container {
   -ms-grid-column: 5;
   -ms-grid-column-span: 2;
   grid-column: 5/7;
@@ -349,7 +471,7 @@ form .date-picker {
   transition: background-color .5s ease;
 }
 
-form .date-picker .selected-date {
+form .date-picker-container .selected-date {
   width: 100%;
   height: 100%;
   display: -webkit-box;
@@ -365,7 +487,7 @@ form .date-picker .selected-date {
   font-size: 28px;
 }
 
-form .date-picker .dates {
+form .date-picker-container .dates {
   display: none;
   position: absolute;
   top: 100%;
@@ -375,7 +497,7 @@ form .date-picker .dates {
   background-color: #eeeeee;
 }
 
-form .date-picker .dates .month {
+form .date-picker-container .dates .month {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -388,7 +510,7 @@ form .date-picker .dates .month {
   border-bottom: 2px solid #cccccc;
 }
 
-form .date-picker .dates .month .arrows {
+form .date-picker-container .dates .month .arrows {
   width: 35px;
   height: 35px;
   display: -webkit-box;
@@ -404,15 +526,15 @@ form .date-picker .dates .month .arrows {
   font-size: 20px;
 }
 
-form .date-picker .dates .month .arrows:hover {
+form .date-picker-container .dates .month .arrows:hover {
   background-color: #cccccc;
 }
 
-form .date-picker .dates .month .arrows:active {
+form .date-picker-container .dates .month .arrows:active {
   background-color: #00adb5;
 }
 
-form .date-picker .dates .days {
+form .date-picker-container .dates .days {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[7];
@@ -420,7 +542,7 @@ form .date-picker .dates .days {
   height: 200px;
 }
 
-form .date-picker .dates .days .day {
+form .date-picker-container .dates .days .day {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -433,20 +555,20 @@ form .date-picker .dates .days .day {
   color: #222831;
 }
 
-form .date-picker .dates .days .day:hover {
+form .date-picker-container .dates .days .day:hover {
   background-color: #00adb5;
 }
 
-form .date-picker .dates .days .day.selected {
+form .date-picker-container .dates .days .day.selected {
   background-color: #37414f;
   color: #eeeeee;
 }
 
-form .date-picker .dates.active {
+form .date-picker-container .dates.active {
   display: block;
 }
 
-form .date-picker:hover {
+form .date-picker-container:hover {
   background-color: #00adb5;
 }
 
@@ -495,15 +617,28 @@ form .kids {
   grid-column: 6/8;
 }
 
-form .btn_bt {
-  -ms-grid-column: 4;
-  -ms-grid-column-span: 4;
-  grid-column: 4/8;
-  -ms-grid-row: 9;
+form .btn_wraper {
+  padding-top: 1rem;
+  -ms-grid-column: 8;
+  -ms-grid-column-span: 3;
+  grid-column: 8/11;
+  -ms-grid-row: 10;
   -ms-grid-row-span: 1;
-  grid-row: 9/10;
-  height: 100%;
-  width: 100%;
+  grid-row: 10/11;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form .btn_bt {
+  height: 75%;
+  width: 75%;
   background-color: #222831;
   border: none;
   color: #eeeeee;

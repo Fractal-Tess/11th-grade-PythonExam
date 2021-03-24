@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block head %}
+<script defer src="{{url_for('static',filename='dist/ticket_check.js')}}"></script>
+{% endblock %}
+{% block content %}
+
+<form>
+    <div class="autocomplete wraper check-ticket">
+        <input id="tni" type="text" placeholder="Ticket number">
+    </div>
+    <div class="checker ch3" id="ch3"></div>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Route Name</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Train arrives at starting station</th>
+                <th>Train arrives at your destination</th>
+                <th>Adults</th>
+                <th>Kids</th>
+                <th>Ticket price</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="active-row" id='label_holder'>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</form>
+
+{% endblock%}

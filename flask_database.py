@@ -61,3 +61,20 @@ class Route_nodes(db.Model):
     arriveTime = db.Column(db.String(length=10))
     departTime = db.Column(db.String(length=10))
 
+class Tickets(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    ticket_number = db.Column(db.String(), unique=True)
+
+    route = db.Column(db.String())
+    startStation =db.Column(db.String())
+    destination =db.Column(db.String())
+
+    arrives_at_starting = db.Column(db.String())
+    arrives_at_destination =db.Column(db.String())
+
+    adult_passengers =db.Column(db.Integer())
+    kid_passengers =db.Column(db.Integer())
+    
+    ticket_price =db.Column(db.Float())
+
+    date =db.Column(db.String())

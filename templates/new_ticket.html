@@ -29,15 +29,16 @@
     <!-- Checkers end -->
 
     <!-- Ticket information -->
-    <label type="text" class="info ti1" id='l_route'>Route:</label>
-    <label type="text" class="info ti2" id='l_from'>From:</label>
-    <label type="text" class="info ti3" id='l_to'>To:</label>
-    <label type="text" class="info ti4" id='l_when_board'>When You board:Station, time & date</label>
-    <label type="text" class="info ti5" id='l_get_off'>When You get off:Station, time & date</label>
+    <label type="text" class="info ti1" id='l_route'></label>
+    <label type="text" class="info ti2" id='l_from'></label>
+    <label type="text" class="info ti3" id='l_to'></label>
+    <label type="text" class="info ti4" id='l_when_board'></label>
+    <label type="text" class="info ti5" id='l_get_off'></label>
+    <label type="text" class="info ti6" id='l_ticket_price'></label>
     <!-- Ticket information end -->
 
     <!-- Date -->
-    <div class="date-picker">
+    <div class="date-picker-container">
         <div class="selected-date"></div>
         <div class="dates">
             <div class="month">
@@ -61,9 +62,17 @@
         <input type="number" min="0" max="9" id="kids" value="0">
     </div>
     <!-- end passengers quantity -->
+    <!-- Choosing a route -->
+    <h3 type="text" class="label l4">Which route</h3>
+    <div class="route-selector">
+        <select type='text' id='selectElmt'>
+        </select>
+    </div>
 
     <!-- Buy button -->
-    <button class="btn_bt">Buy ticket</button>
+    <div class="btn_wraper">
+        <button class="btn_bt" id="buy_btn">Buy ticket</button>
+    </div>
     <!-- End buy button -->
 
     </div>
